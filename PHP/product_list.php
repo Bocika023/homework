@@ -31,3 +31,41 @@ $products = getActiveProducts();
 //   Termek 11 1221 [Raktaron]
 //   Termek 12 442 [Raktaron]
 
+
+foreach($products as $p) {
+  // kihagyjuk ha -1
+  if ($p->quantity == -1) {
+    continue;
+  }
+  // kiirunk egy csillagot ha uj
+  if($p->isNew){
+    echo "* ";
+  }
+  // kiirjuk a termek nevet
+  echo $p->name;
+
+  // kiirjuk az arat
+  echo " ";
+  if ($p->actionPrice > 0 && $p->actionPrice < $p->price) {
+    // ha van akcios ar es az kisebb mint az eladasi ar, akkor azt irjuk ki
+    echo $p->actionPrice;
+    echo " (-" . (100-(int)(($p->actionPrice/$p->price)*100)) . "%)";
+  } else {
+    // minden mas esetben a sima arat irjuk ki
+    echo $p->price;
+  }
+  echo " ";
+  
+  // Kiirjuk, hogy van-e raktaron avagy sem
+  echo "[";
+  if ($p->quantity == 0) {
+    echo "Rendelesre";
+  } else {
+    echo "Raktaron";
+  }
+  echo "]";
+  
+
+  // utunk a vegen egy entert
+  echo "\n";
+}
